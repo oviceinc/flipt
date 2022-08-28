@@ -55,4 +55,3 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.FLIPT_TOKEN }}
-          ANALYTICS_KEY: ${{ secrets.ANALYTICS_KEY }}
