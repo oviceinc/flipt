@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - "v*"
+
   workflow_dispatch:
 
 permissions:
@@ -44,7 +45,7 @@ jobs:
         with:
           registry: ghcr.io
           username: "${{ github.repository_owner }}"
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.FLIPT_TOKEN }}
 
       - name: GoReleaser
         uses: goreleaser/goreleaser-action@v3
@@ -53,7 +54,5 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.FLIPT_TOKEN }}
           ANALYTICS_KEY: ${{ secrets.ANALYTICS_KEY }}
-          DISCORD_WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
-          DISCORD_WEBHOOK_TOKEN: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
