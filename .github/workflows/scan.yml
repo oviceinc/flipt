@@ -2,7 +2,7 @@ name: Scan
 on:
   push:
     branches:
-      - main
+      - none
     paths-ignore:
       - "deploy/**"
       - "examples/**"

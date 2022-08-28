@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - "v*"
+    branches:
+      - "Firas/SRE-586"
   workflow_dispatch:
 
 permissions:
