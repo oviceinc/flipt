@@ -68,6 +68,12 @@ import (
 	otgrpc "github.com/opentracing-contrib/go-grpc"
 	"github.com/opentracing/opentracing-go"
 	jaeger_config "github.com/uber/jaeger-client-go/config"
+
+	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
+    datadog_tracer "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
+    "github.com/gin-gonic/gin"
+
+	"gopkg.in/DataDog/dd-trace-go.v1/profiler"
 )
 
 const devVersion = "dev"
@@ -88,6 +94,21 @@ var (
 )
 
 func main() {
+	datadog_tracer.Start()
+    defer datadog_tracer.Stop()
+	// Create a gin.Engine
+    r := gin.New()
+	r.Use(gintrace.Middleware("flipt"))
+
+	err := profiler.Start(
+		profiler.WithService("flipt"),
+		profiler.WithEnv("staging"),
+	)
+	
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer profiler.Stop()
 	var (
 		rootCmd = &cobra.Command{
 			Use:     "flipt",
